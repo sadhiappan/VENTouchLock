@@ -127,6 +127,9 @@ static NSString *const VENTouchLockUserDefaultsKeyTouchIDActivated = @"VENTouchL
 - (void)requestTouchIDWithCompletion:(void (^)(VENTouchLockTouchIDResponse))completionBlock reason:(NSString *)reason
 {
     if ([[self class] canUseTouchID]) {
+        // http://stackoverflow.com/a/26730860
+        dispatch_queue_t highPriorityQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.75 * NSEC_PER_SEC), highPriorityQueue, ^{
         LAContext *context = [[LAContext alloc] init];
         context.localizedFallbackTitle = NSLocalizedString(@"Enter Passcode", nil);
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
@@ -157,6 +160,7 @@ static NSString *const VENTouchLockUserDefaultsKeyTouchIDActivated = @"VENTouchL
                                   }
                               });
                           }];
+        });
     }
 }
 
@@ -192,7 +196,11 @@ static NSString *const VENTouchLockUserDefaultsKeyTouchIDActivated = @"VENTouchL
                 self.snapshotView = snapshotDisplayController.view;
                 [mainWindow addSubview:self.snapshotView];
             }
-            dispatch_async(dispatch_get_main_queue(), ^{
+            
+            /* Present next run loop. Prevents "unbalanced VC display" warnings. */
+            double delayInSeconds = 0.1;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [rootViewController presentViewController:displayController animated:NO completion:^{
                     [splashViewController showUnlockAnimated:NO];
                 }];

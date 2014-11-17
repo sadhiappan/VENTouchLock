@@ -51,19 +51,6 @@
     [self setLockVisible];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-}
-
-
 #pragma mark - Present unlock methods
 
 - (void)showUnlockAnimated:(BOOL)animated
@@ -113,13 +100,6 @@
         }
     };
     return enterPasscodeVC;
-}
-
-- (void)appWillEnterForeground
-{
-    if (!self.presentedViewController) {
-        [self showUnlockAnimated:NO];
-    }
 }
 
 - (void)unlockWithType:(VENTouchLockSplashViewControllerUnlockType)unlockType

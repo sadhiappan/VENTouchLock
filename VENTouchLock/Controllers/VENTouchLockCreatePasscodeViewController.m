@@ -23,6 +23,8 @@ static CGFloat const VENTouchLockCreatePasscodeViewControllerAnimationDuration =
 {
     [super viewDidLoad];
     self.passcodeView.title = [self.touchLock appearance].createPasscodeInitialLabelText;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(userTappedCancel)];
 }
 
 - (void)enteredPasscode:(NSString *)passcode;
@@ -108,4 +110,7 @@ static CGFloat const VENTouchLockCreatePasscodeViewControllerAnimationDuration =
                      }];
 }
 
+- (void)userTappedCancel {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
