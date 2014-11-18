@@ -119,6 +119,6 @@ static CGFloat const VENTouchLockCreatePasscodeViewControllerAnimationDuration =
 
 - (void)userTappedCancel {
     [self dismissViewControllerAnimated:YES completion:nil];
-    if (self.passcodeSetBlock) self.passcodeSetBlock(YES);
+    if (self.passcodeSetBlock) self.passcodeSetBlock(NO);
 }
 @end
