@@ -1,5 +1,7 @@
 #import "VENTouchLockPasscodeViewController.h"
 
-@interface VENTouchLockCreatePasscodeViewController : VENTouchLockPasscodeViewController
+typedef void (^PasscodeSetBlock)(BOOL success);
 
+@interface VENTouchLockCreatePasscodeViewController : VENTouchLockPasscodeViewController
+- (id)initWithPasscodeSetBlock:(PasscodeSetBlock)passcodeSetBlock;
 @end

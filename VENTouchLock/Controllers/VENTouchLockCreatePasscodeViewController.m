@@ -6,9 +6,15 @@ static CGFloat const VENTouchLockCreatePasscodeViewControllerAnimationDuration =
 
 @interface VENTouchLockCreatePasscodeViewController ()
 @property (strong, nonatomic) NSString *firstPasscode;
+@property (strong, nonatomic) PasscodeSetBlock passcodeSetBlock;
 @end
 
 @implementation VENTouchLockCreatePasscodeViewController
+
+- (id)initWithPasscodeSetBlock:(PasscodeSetBlock)passcodeSetBlock {
+    _passcodeSetBlock = passcodeSetBlock;
+    return [self init];
+}
 
 - (instancetype)init
 {
@@ -34,6 +40,7 @@ static CGFloat const VENTouchLockCreatePasscodeViewControllerAnimationDuration =
         if ([passcode isEqualToString:self.firstPasscode]) {
             [self.touchLock setPasscode:passcode];
             [self finishWithResult:YES animated:YES];
+            if (self.passcodeSetBlock) self.passcodeSetBlock(YES);
         }
         else {
             [self.passcodeView shakeAndVibrateCompletion:^{
@@ -112,5 +119,6 @@ static CGFloat const VENTouchLockCreatePasscodeViewControllerAnimationDuration =
 
 - (void)userTappedCancel {
     [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.passcodeSetBlock) self.passcodeSetBlock(YES);
 }
 @end
