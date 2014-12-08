@@ -129,7 +129,7 @@ static NSString *const VENTouchLockUserDefaultsKeyTouchIDActivated = @"VENTouchL
     if ([[self class] canUseTouchID]) {
         // http://stackoverflow.com/a/26730860
         dispatch_queue_t highPriorityQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.75 * NSEC_PER_SEC), highPriorityQueue, ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), highPriorityQueue, ^{
         LAContext *context = [[LAContext alloc] init];
         context.localizedFallbackTitle = NSLocalizedString(@"Enter Passcode", nil);
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
