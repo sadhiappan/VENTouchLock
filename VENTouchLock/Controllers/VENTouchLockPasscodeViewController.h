@@ -43,4 +43,6 @@
  */
 - (void)finishWithResult:(BOOL)success animated:(BOOL)animated;
 
+@property (strong, nonatomic) UITextField *invisiblePasscodeField;
+
 @end

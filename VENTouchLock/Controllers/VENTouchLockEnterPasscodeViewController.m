@@ -31,6 +31,9 @@ NSString *const VENTouchLockEnterPasscodeUserDefaultsKeyNumberOfConsecutivePassc
 {
     [super viewDidLoad];
     self.passcodeView.title = [self.touchLock appearance].enterPasscodeInitialLabelText;
+    if (self.showCancelButton) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(userTappedCancel)];
+    }
 }
 
 - (void)enteredPasscode:(NSString *)passcode
@@ -85,6 +88,11 @@ NSString *const VENTouchLockEnterPasscodeUserDefaultsKeyNumberOfConsecutivePassc
         splashViewController = (VENTouchLockSplashViewController *)presentingViewController;
     }
     return splashViewController;
+}
+
+- (void)userTappedCancel {
+    [self.invisiblePasscodeField resignFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

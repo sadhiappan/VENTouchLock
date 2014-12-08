@@ -74,6 +74,8 @@
             case VENTouchLockTouchIDResponseUsePasscode:
                 [weakSelf showPasscodeAnimated:YES];
                 break;
+            case VENTouchLockTouchIDResponseCanceled:
+                [weakSelf showPasscodeAnimated:YES];
             default:
                 break;
         }

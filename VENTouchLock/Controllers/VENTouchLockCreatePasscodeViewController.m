@@ -118,6 +118,7 @@ static CGFloat const VENTouchLockCreatePasscodeViewControllerAnimationDuration =
 }
 
 - (void)userTappedCancel {
+    [self.invisiblePasscodeField resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
     if (self.passcodeSetBlock) self.passcodeSetBlock(NO);
 }
